@@ -10,6 +10,11 @@ This is an **unofficial** build, not a Skiff release, and illuminus5 has nothing
 **Skiff 2.1.1** (commit `48e77fd`, 2026-10-31) as published. Tested on a real FM-1 (2026-11-03): HOME, the tracks,
 the PRESETS, the MENU, with FM-1 Mirror on a Mac and FM-1 Mirror + Spyglass on an Android tablet.
 
+## The family Skiff comes from
+
+Skiff, JIANT FM and ChoralRoot all come from the same parent, Leo Kuroshita's Felucca, and so do 23 of the 25 most
+popular FM-1 firmwares: **[FIRMWARE_FAMILY.md](FIRMWARE_FAMILY.md)** has the study, the family tree and every source.
+
 ## Skiff moves fast
 
 Skiff gets new versions often. This build is **Skiff 2.1.1** plus the screen. It doesn't update itself: when Skiff
