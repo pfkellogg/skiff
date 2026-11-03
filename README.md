@@ -8,6 +8,11 @@
 <p align="center"><b>A six-track groovebox firmware for the M-VAVE FM-1 and SMK-37 Pro</b><br>
 synths and drums, patterns and songs, live performance, and a screen that shows what every control does</p>
 
+> **This fork: Skiff + FM-1 Big Screen (unofficial).** Skiff 2.1.1 with the FM-1's screen shown big by
+> [FM-1 Mirror](https://github.com/pfkellogg/fm1-mirror), over USB, and the sound playing on its spyglass. See
+> **[BIG_SCREEN.md](BIG_SCREEN.md)**; the `.fwsc` is in this fork's Releases. Not a Skiff release: for Skiff itself,
+> see [illuminus5/skiff](https://github.com/illuminus5/skiff).
+
 <p align="center">
   <a href="https://github.com/illuminus5/skiff/releases/latest"><img src="https://img.shields.io/github/v/release/illuminus5/skiff?label=release" alt="Latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--only-blue.svg" alt="License: GPL-3.0-only"></a>
