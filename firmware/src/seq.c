@@ -1824,6 +1824,11 @@ static void events_block(uint32_t n)
                 else
                     midi_clock_transport(status, ms);
             }
+#if SKIFF_SPP
+        } else if (status == 0xF2u) {                /* Song Position Pointer: where the master is (following it) */
+            if (clock_mode == source)
+                midi_clock_locate(d1 | d2 << 7);
+#endif
         } else
             midi_event(st, ch, d1, d2);
     }

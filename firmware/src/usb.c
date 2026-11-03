@@ -160,7 +160,9 @@ static uint8_t sx_frame[640];
 static uint32_t sx_pos;
 static volatile uint32_t sx_frame_len;
 static volatile uint8_t sx_ready, sx_collect, sx_busy;
-#define SXQ 64u
+#ifndef SXQ
+#define SXQ 64u                                         /* (a power of two; the Big Screen build: 512) */
+#endif
 static uint32_t sx_out_q[SXQ];
 static volatile uint32_t so_w, so_r;
 #endif
@@ -757,6 +759,13 @@ stall:
     sie_wr(S_CSR0, 0x60);
 }
 
+#ifndef SKIFF_BIG_SCREEN
+#define SKIFF_BIG_SCREEN 0
+#endif
+#if SKIFF_BIG_SCREEN
+int sm_sysex(const uint8_t *m, unsigned n);           /* the Big Screen mirror (skiff_mirror.c, screen_mirror.c) */
+#endif
+
 /* SysEx assembly: only short commands matter here */
 static void sysex_byte(uint8_t b)
 {
@@ -796,6 +805,10 @@ static void sysex_byte(uint8_t b)
             ok = usb.sysex[i] == UBOOT_KEY[i];
         if (ok)
             usb.uboot_req = 1;
+#if SKIFF_BIG_SCREEN
+        else if (usb.sx_len == 6u && usb.sysex[1] == 0x7D && usb.sysex[2] == 'F' && usb.sysex[3] == 'S')
+            sm_sysex(usb.sysex, 6u);                    /* the Big Screen mirror's hello (skiff_mirror.c) */
+#endif
 #if FELUCCA_OTA
         else if (usb.sx_len == 6u && usb.sysex[1] == 0x22 && usb.sysex[2] == 0x24 && usb.sysex[3] == 0x35 &&
                  usb.sysex[4] == 0x7F)
@@ -830,6 +843,12 @@ static void midi_in_event(uint32_t pkt)                 /* one USB-MIDI event pa
         midi_enqueue(0xFu | st << 8, 1u);
         return;
     }
+#if SKIFF_SPP
+    if (cin == 0x3u && st == 0xF2u && !(pkt & 0x80800000u)) {   /* Song Position Pointer: F2 lsb msb (seq.c) */
+        midi_enqueue(pkt, 1u);
+        return;
+    }
+#endif
     if (cin >= 8u && cin <= 0xEu && (st >> 4) == cin && !((pkt >> 16) & 0x80u) &&
         ((cin == 0xCu || cin == 0xDu) || !(pkt & 0x80000000u))) {
         midi_enqueue(pkt, 1u);

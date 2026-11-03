@@ -15,6 +15,19 @@
 #ifndef FELUCCA_OTA
 #define FELUCCA_OTA 1            /* M-UPGRADE update entry and the editor SysEx; needs FELUCCA_FLASH */
 #endif
+#ifndef SKIFF_BIG_SCREEN
+#define SKIFF_BIG_SCREEN 1       /* the FM-1 Big Screen mirror: the screen over USB SysEx to FM-1 Mirror (skiff_mirror.c) */
+#endif
+#if SKIFF_BIG_SCREEN && !FELUCCA_OTA
+#error "SKIFF_BIG_SCREEN needs FELUCCA_OTA (usb.c's SysEx ring)"
+#endif
+#ifndef SKIFF_SPP
+#define SKIFF_SPP 1              /* Song Position Pointer (F2): following MIDI clock, the tracks jump to where the master
+                                  * says (midi_clock.c midi_clock_locate), so Scrub-a-dub's loops and scrubs land in place */
+#endif
+#if SKIFF_BIG_SCREEN
+#define SXQ 512u                 /* usb.c's SysEx ring: 64 keeps the screen to ~25 KB/s; 512 ~67 KB/s */
+#endif
 #ifndef FELUCCA_OTA_DRYRUN
 #define FELUCCA_OTA_DRYRUN 0     /* 1 = stage, ask "success", then undo: no record, no reset */
 #endif
@@ -152,6 +165,9 @@ static inline __attribute__((always_inline)) void *audio_far(void *p) { void *vo
 #endif
 #if BOARD_SMK37
 #include "smk_ui.c"              /* the SMK-37's own controls: pads, faders, wheels, pedal, < >, KEY VELOCITY */
+#endif
+#if SKIFF_BIG_SCREEN
+#include "skiff_mirror.c"        /* the FM-1 Big Screen mirror (MIT; after usb.c, gfx.c and ui_draw.c, before main.c) */
 #endif
 #include "master.c"              /* the MASTER pot (#137: read before the audio starts) */
 #include "main.c"

@@ -30,6 +30,55 @@ static __attribute__((noinline)) void midi_clock_transport(uint32_t status, uint
     }
 }
 
+#if SKIFF_SPP
+/* Song Position Pointer (F2 lsb msb, following MIDI clock): spp MIDI beats (1/16s) from the top. Each track goes to
+ * the step that many 1/16s reach at its own STEP DIV and LEN, in its direction (FWD, REV, PING; RAND anywhere), so that
+ * step fires on the next block; Continue (FB) then plays on from there, as the MIDI spec has it. The pattern's steps
+ * only: a song's row is not moved. While playing it takes effect at once (a master scrubbing). */
+static __attribute__((noinline)) void midi_clock_locate(uint32_t spp)
+{
+    uint32_t i, at = spp * (beat_samples() / 4u);    /* samples from the top: a MIDI beat is a 1/16 */
+    for (i = 0; i < NTRK; i++) {
+        track_t *t = &trk[i];
+        uint32_t len = t->p[P_SLEN] > 0 ? (uint32_t)t->p[P_SLEN] : 1u, d = (uint32_t)t->p[P_DIR];
+        uint32_t step = div_samples((uint32_t)t->p[P_SDIV]), n = step ? at / step : 0u, m, idx;
+        t->nud = 0;                                  /* as seq_start: no NUDGE, skips, retrigs or ratchets pending */
+        t->rskip_n = 0;
+        t->rh_n = 0;
+        t->rat_left = 0;
+        t->seq_pos = 0x7FFFFFFF;                     /* the step after seq_idx fires on the next block */
+        if (!n) {                                    /* the top: exactly as seq_start */
+            t->seq_idx = (uint16_t)(len - 1u);
+            t->seq_cnt = 0;
+            continue;
+        }
+        m = (n - 1u) % len;                          /* the step before step n, the one "playing" now */
+        switch (d) {
+        case DIR_REV:
+            idx = len - 1u - m;
+            t->seq_down = 0;
+            break;
+        case DIR_PING: {                             /* 1 2 .. LEN .. 2 1 2 ..: a period of 2 LEN - 2 */
+            uint32_t p = len > 1u ? 2u * len - 2u : 1u, k = (n - 1u) % p;
+            idx = k < len ? k : p - k;
+            t->seq_down = (uint8_t)(k >= len);
+            break;
+        }
+        case DIR_RAND:
+            idx = rng() % len;
+            break;
+        default:
+            idx = m;
+        }
+        t->seq_idx = (uint16_t)idx;
+        t->seq_cnt = (uint8_t)(m + 1u);              /* steps of this pass played (seq_pass_last, seq_at) */
+    }
+    launch_steps = spp;                              /* the launch points' 1/16s, as from the top (launch.c) */
+    beat_n = spp / 4u % 4u;                          /* the beat of the bar (the ARP LED) */
+    beat_pos = 0;
+}
+#endif
+
 static __attribute__((noinline)) void midi_clock_pulse(uint32_t ms)
 {
     uint32_t q;
