@@ -15,6 +15,8 @@ the PRESETS, the MENU, with FM-1 Mirror on a Mac and FM-1 Mirror + Spyglass on a
 
 A fourth: **[SLOOP + FM-1 Big Screen](https://github.com/pfkellogg/sloop-fm1/blob/big-screen/BIG_SCREEN.md)**, tested on a real FM-1 (2026-11-07). Watch it: [SLOOP on a Big Screen](https://youtu.be/Pd4Bm6JvtkU).
 
+A fifth: **[Melodee + FM-1 Big Screen](https://github.com/pfkellogg/melodee/blob/big-screen/BIG_SCREEN.md)**, tested on a real FM-1 (2026-11-07).
+
 ## The family Skiff comes from
 
 Skiff, JIANT FM and ChoralRoot all come from the same parent, Leo Kuroshita's Felucca, and so do 23 of the 25 most
