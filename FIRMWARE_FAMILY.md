@@ -81,3 +81,8 @@ From his GitHub profile (kurogedelic), the Hügelton organisation and the reposi
   no user interface"), the engines as **Felucca-Engines** (MIT); **plugins** from 1.9: "sound engines that anyone can
   make and install without building a firmware". Charles Vestal's fm1-base builds on felucca-bsp (AMB-1, LOOM-8).
 - Since then also **Pendel** (2026-11-02): firmware for the M-VAVE Pocket AMP, "sibling of Felucca".
+
+## Since then
+
+- M-VAVE's own versions, V15 to V16 and how Official Open fits in: [Every M-VAVE FM-1 Firmware Explained](https://youtu.be/WOjvFdw5KMA).
+- SLOOP and its parent, Felucca: [SLOOP on a Big Screen](https://youtu.be/Pd4Bm6JvtkU). On November 4, 2026: SLOOP 737 stars, Felucca 650.

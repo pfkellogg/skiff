@@ -13,6 +13,8 @@ the PRESETS, the MENU, with FM-1 Mirror on a Mac and FM-1 Mirror + Spyglass on a
 **Watch it:** [Skiff on a Big Screen + the FM-1 Firmware Family Tree](https://youtu.be/lmMT-FtAoSE) (4:53): Skiff on the big screen, and why
 23 of the 25 most popular FM-1 firmwares come from Felucca.
 
+A fourth, not released yet: **SLOOP + FM-1 Big Screen**, tested on a real FM-1 (2026-11-04). Watch it: [SLOOP on a Big Screen](https://youtu.be/Pd4Bm6JvtkU).
+
 ## The family Skiff comes from
 
 Skiff, JIANT FM and ChoralRoot all come from the same parent, Leo Kuroshita's Felucca, and so do 23 of the 25 most
