@@ -29,6 +29,11 @@ moves on, this build stays at 2.1.1 until the screen is added to a newer Skiff a
 names say which Skiff is inside). You can always go back to the newest Skiff with its own
 [web installer](https://illuminus5.github.io/skiff/webapp/installer/): that one has no big screen.
 
+> **Newer FM-1s (sold from late 2026, flash chip `0xB36014`): this build doesn't know their chip yet.** It doesn't damage
+> anything, but on a newer FM-1 it keeps your work in memory only (gone when you switch off), and installing another
+> firmware from it may fail. illuminus5 fixed it in Skiff 2.2 (this build is 2.1.1), and this build will follow. Check which chip yours has with
+> [M-Flasher](https://github.com/jvitkauskas/m-flasher); on a newer FM-1, use the author's own build, or SLOOP or Melodee + Big Screen, for now. (2026-11-08)
+
 ## Installing it
 
 1. **Charge the FM-1, plug it straight into the computer** (no hub), close every app that uses it.
